@@ -15,8 +15,8 @@ public class Order extends Controller
 		return ok(editOrder.render("This is the page for editing contents of the order"));
 	}
 	
-	public static Result showUser()
+	public static Result showUser(int id)
 	{
-		return ok(showOrderUser.render("This is the user of the order"));
+		return ok(showOrderUser.render("This is the user of the order " + id));
 	}
 }

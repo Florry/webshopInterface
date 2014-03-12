@@ -9,8 +9,8 @@ GET 	/products/:id						controllers.Product.showProductById(id: Int)
 
 #Categories
 GET 	/categories/showall					controllers.Category.showAllCategories()
-GET 	/categories/:id						controllers.Category.showCategoryById(id: Int)
 GET		/categories/edit					controllers.Category.editCategory()
+GET 	/categories/:id						controllers.Category.showCategoryById(id: Int)
 
 #Shoppingcart
 GET 	/shoppingcart/contents				controllers.ShoppingCart.showContents()
@@ -19,7 +19,7 @@ GET 	/shoppingcart/edit					controllers.ShoppingCart.editContents()
 #Order
 GET		/order/contents						controllers.Order.showContents()
 GET		/order/edit							controllers.Order.editContents()
-GET		/order/user							controllers.Order.showUser()
+GET		/order/user/:id						controllers.Order.showUser(id: Int)
 
 #Checkout
 GET		/checkout							controllers.Checkout.doCheckout()
