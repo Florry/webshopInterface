@@ -1,0 +1,28 @@
+# Home page
+GET 	/									controllers.Application.home()
+
+#Products
+GET 	/products/showall					controllers.Product.showAllProducts()
+GET 	/products/edit						controllers.Product.editProduct()
+GET 	/products/lowstock/:param			controllers.Product.showLowStock(param: Int)
+GET 	/products/:id						controllers.Product.showProductById(id: Int)
+
+#Categories
+GET 	/categories/showall					controllers.Category.showAllCategories()
+GET 	/categories/:id						controllers.Category.showCategoryById(id: Int)
+GET		/categories/edit					controllers.Category.editCategory()
+
+#Shoppingcart
+GET 	/shoppingcart/contents				controllers.ShoppingCart.showContents()
+GET 	/shoppingcart/edit					controllers.ShoppingCart.editContents()
+
+#Order
+GET		/order/contents						controllers.Order.showContents()
+GET		/order/edit							controllers.Order.editContents()
+GET		/order/user							controllers.Order.showUser()
+
+#Checkout
+GET		/checkout							controllers.Checkout.doCheckout()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file             			controllers.Assets.at(path="/public", file)

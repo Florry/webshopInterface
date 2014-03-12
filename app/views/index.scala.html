@@ -1,0 +1,38 @@
+@(param: String)
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="@routes.Assets.at("main.min.css")">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<title>@param</title>
+	</head>
+	<body class="less">
+		<div class="bs-example">
+    		<div class="alert alert-danger alert-error">
+     	   	<div class="container">
+				<center><h2>@param</h2></center>
+				<a href="/products/edit">Product edit</a></br>
+				<a href="/products/showall">Product show all</a></br>
+				<a href="/products/1">Product show one product</a></br>
+				<a href="/products/lowstock/10">Product show products low on stockt</a></br>
+				<br>
+				<a href="categories/edit">Category edit</a></br>
+				<a href="categories/showall">Category show all</a></br>
+				<a href="categories/category/1">Category show one category</a></br>
+				<br>
+				<a href="shoppingcart/edit">Shoppingcart edit contents</a></br>
+				<a href="shoppingcart/contents">Shoppingcart get contents</a></br>
+				<br>
+				<a href="order/edit">Order edit contents</a></br>
+				<a href="order/contents">Order show contents</br>
+				<br>
+				<a href="checkout">Checkout</a></br>
+				
+     	   	</div>
+    	</div>
+	</body>
+</html>
