@@ -7,31 +7,29 @@
 		<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-		<title>@title</title>
+		<title>Webshop - @title</title>
 	</head>
-	<body>
-					<center><h2>Welcome!</h2></center>
+	<body style="padding: 20px;">
+					<h2>Welcome!</h2>
+					<div style="float: left;">
 						<small>
-						<a href="/products/edit">Product edit</a></br>
-						<a href="/products/showall">Product show all</a></br>
-						<a href="/products/1">Product show one product</a></br>
-						<a href="/products/lowstock/10">Product show products low on stockt</a></br>
+						<a href="@routes.Product.editProduct">Product edit</a></br>
+						<a href="@routes.Product.showAllProducts">Product show all</a></br>
+						<a href="@routes.Product.showLowStock(10)">Product show products low on stock</a></br>
 						<br>
-						<a href="/categories/edit">Category edit</a></br>
-						<a href="/categories/showall">Category show all</a></br>
-						<a href="/categories/1">Category show one category</a></br>
+						<a href="@routes.Category.editCategory">Category edit</a></br>
+						<a href="@routes.Category.showAllCategories">Category show all</a></br>
 						<br>
-						<a href="/shoppingcart/edit">Shoppingcart edit contents</a></br>
-						<a href="/shoppingcart/contents">Shoppingcart get contents</a></br>
+						<a href="@routes.ShoppingCart.showContents">Shoppingcart get contents</a></br>
 						<br>
-						<a href="/order/edit">Order edit contents</a></br>
-						<a href="/order/contents">Order show contents</br>
-						<a href="/order/user/1">Order show user</br>
+						<a href="@routes.Order.editContents">Order edit</a></br>
+						<a href="@routes.Order.showAllOrders">Order show all</a></br>
 						<br>
-						<a href="/checkout">Checkout</a></br>
+						<a href="@routes.Checkout.doCheckout">Checkout</a></br>
 						</small>
+					</div>
 					
-	     	   		<center>@content</center>
+	     	   		<div style="width: 800px; margin-left: 20px; padding: 10px; background-color: lightGrey; float:left; text-align: center;">@content</div>
     	
 	</body>
 </html>

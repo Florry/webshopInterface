@@ -1,7 +1,17 @@
-@(message: String)
+@(products: List[model.ProductModel])
 @index("all products") {
-			<h1> @message </h1>
-			<h2>  1. apple - round fruit - 200kr</h2>
-			<h2>  2. Bike - a hike bike - 199 000kr</h2>
-			<h2>  etc</h2>
+			<h1>All products in the store:</h1>
+			<h4> 
+			@for( product <- products ){
+				
+				@if(product.getStock() > 0){
+						<span>
+					}else{
+						<span style="background-color: lightgrey">
+					}
+					<a href="@routes.Product.showProductById(product.getId())">@product.getName()</a></span>
+					</span>
+					<br />
+			}
+			</h4>
 }

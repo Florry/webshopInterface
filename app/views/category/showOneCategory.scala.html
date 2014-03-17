@@ -1,6 +1,19 @@
-@(message: String)
+@(category: model.CategoryModel)(products: List[model.ProductModel])
+@index(category.getName()) {
 
-@index("one category") {
-				<h1> @message </h1>
-				<h2> Details about the @message product</h2>
+			<h1> @category.getName() </h1>
+			<small>
+				Staff responsible: @category.getStaff_responsible()<br/>
+				Id: @category.getId()<br/>
+				Products in category: <br/>
+				@for( product <- products ){
+					@for(productCategory <- product.getCategories()){
+						@if(productCategory == category.getId()){
+							<a href="@routes.Product.showProductById(product.getId())">@product.getName()</a><br/>
+						}
+					}
+					
+				}
+			</small>
+	
 }

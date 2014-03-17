@@ -1,5 +1,12 @@
-@(message: String)
+@(products: List[model.ProductModel])
 @index("Products low on stock") {
-			<h1> @message </h1>
-			<h2> Products Low on stock: </h2>
+			<h1>Products low on stock:</h1>
+			<h4> 
+			@for( product <- products ){
+				
+				@if(product.getStock() < 10){
+					<a href="@routes.Product.showProductById(product.getId())">@product.getName()</a>, 			
+					}
+			}
+			</h4>
 }

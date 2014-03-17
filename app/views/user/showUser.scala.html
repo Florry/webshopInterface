@@ -1,0 +1,23 @@
+@(user: model.UserModel)
+@index(user.getEmail()) {
+	<h1>@user.getFirstname() @user.getLastname()</h1>
+	<h4>@user.getEmail()</h4>
+	<hr>
+	<small>
+	<b>Date of birth</b><br/> 
+	@if(user.getDob() == null){
+		n/a
+		}else{
+		@user.getDob()
+		} <br/>
+	<b>Telephone</b><br/> 
+	@if(user.getTelephone() == null){
+		n/a
+	}else{
+		@user.getTelephone()
+	}
+	<br/>
+	<b>Address</b><br/> @user.getAddress1() @user.getAddress2() <br/> @user.getPostcode() @user.getTown()<br/>
+
+	</small>
+}

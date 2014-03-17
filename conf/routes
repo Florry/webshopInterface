@@ -17,9 +17,12 @@ GET 	/shoppingcart/contents				controllers.ShoppingCart.showContents()
 GET 	/shoppingcart/edit					controllers.ShoppingCart.editContents()
 
 #Order
-GET		/order/contents						controllers.Order.showContents()
+GET		/order/contents/:id					controllers.Order.showContents(id: Int)
+GET		/order/showall						controllers.Order.showAllOrders()
 GET		/order/edit							controllers.Order.editContents()
-GET		/order/user/:id						controllers.Order.showUser(id: Int)
+
+#User
+GET		/user/:email 						controllers.User.showUser(email)
 
 #Checkout
 GET		/checkout							controllers.Checkout.doCheckout()

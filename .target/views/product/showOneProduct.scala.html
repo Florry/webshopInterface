@@ -1,5 +1,26 @@
-@(message: String)
-@index("product") {
-			<h1> @message </h1>
-			<h2> Details about the @message product</h2>
+@(product: model.ProductModel)
+@index(product.getName()) {
+
+			<h1> @product.getName() </h1>
+			<h4>Price: @product.getCost() $</h4>
+			<small>@product.getDescription()</small>
+
+			@if(product.getStock() > 0){
+				<h5>@product.getStock() @product.getName()s in stock</h5>
+				<h4>Buy now!</h4>
+			}else{
+				<h4>Out of stock!</h4>
+			}
+			</br>
+			<small>
+				Categories: <br/>
+				@for(category <- product.getCategories()){
+					<a href="@routes.Category.showCategoryById(category)">@controllers.Category.getCategory(category).getName()</a><br/>
+				}
+				
+				</br>
+				Id: @product.getId()
+			</small>
+			</br>
+	
 }

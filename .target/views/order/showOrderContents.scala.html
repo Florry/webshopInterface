@@ -1,9 +1,14 @@
-@(message: String)
-
-@index("order contents") {
-			<title>@message</title>
-			<h1> @message </h1>
-			<h2>  1. films</h2>
-			<h2>  2. books</h2>
-			<h2>  etc</h2>
+@(order: model.OrderModel)
+@index("order " + order.getId()) {
+			<h4>Order #@order.getId() <br/>by 
+			<a href="@routes.User.showUser(order.getUser())">@order.getUser()</a> </h4>
+			<h5>at @order.getDate()</h5>
+			<small>Contents:<br/>
+			@for(content <- order.getContents())			{
+				 <a href="@routes.Product.showProductById(controllers.Product.getProduct(content._1).getId())">
+					 @controllers.Product.getProduct(content._1).getName()
+				 </a> 
+				 - @controllers.Product.getProduct(content._1).getCost()$<br/>
+			}
+			</small>
 }

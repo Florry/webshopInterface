@@ -1,9 +1,9 @@
-@(message: String)
-
+@(categories: List[model.CategoryModel])
 @index("all categories") {
-				<title>@message</title>
-				<h1> @message </h1>
-				<h2>  1. films</h2>
-				<h2>  2. books</h2>
-				<h2>  etc</h2>
+			<h1>All categories in the store:</h1>
+			<h4> 
+			@for( category <- categories ){
+					<a href="@routes.Category.showCategoryById(category.getId())">@category.getName()</a><br/>
+			}
+			</h4>
 }
