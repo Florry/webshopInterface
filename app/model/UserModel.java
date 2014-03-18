@@ -1,7 +1,12 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public final class UserModel
 {
+	@Id
 	private final String email;
 	private final String password;
 	private final String firstname;
@@ -16,6 +21,7 @@ public final class UserModel
 	public static class Builder
 	{
 		// required fields
+		@Id
 		private final String email;
 		private final String password;
 		private final String firstname;

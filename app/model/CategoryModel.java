@@ -1,9 +1,14 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public final class CategoryModel
 {
 	public static final int DEFAULT_ID = -1;
 	
+	@Id
 	private int id;
 	private String name;
 	private int staff_responsible;

@@ -1,6 +1,8 @@
 # Home page
 GET 	/									controllers.Application.home()
 
+GET		/populate							controllers.Application.populateDatabase()
+
 #Products
 GET 	/products/showall					controllers.Product.showAllProducts()
 GET 	/products/edit						controllers.Product.editProduct()

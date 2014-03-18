@@ -3,15 +3,20 @@ package model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class OrderModel
 {
 	private final Map<Integer, Integer> products;
 	private final String user;
 	private final String date;
-	private final String id;
-	private final static String DEFAULT_ID = "-1";
+	@Id
+	private final int id;
+	private final static int DEFAULT_ID = -1;
 	
-	public OrderModel(String user, Map<Integer, Integer> products, String date, String id)
+	public OrderModel(String user, Map<Integer, Integer> products, String date, int id)
 	{
 		this.id = id;
 		this.date = date;
@@ -39,7 +44,7 @@ public class OrderModel
 		return products;
 	}
 	
-	public String getId()
+	public int getId()
 	{
 		return id;
 	}
@@ -47,9 +52,8 @@ public class OrderModel
 	@Override
 	public String toString()
 	{
-		
-		return String.format("Order %s: %s - %s - %s", getId(), getUser(), getDate(), getContents()
-				.toString());
+		return "Order " + this.getId() + ": " + this.getUser() + " - " + getDate() + " - "
+				+ getContents();
 	}
 	
 	@Override
@@ -57,7 +61,7 @@ public class OrderModel
 	{
 		int result = 1;
 		result += 37 * this.user.hashCode();
-		result += 37 * this.id.hashCode();
+		result += 37 * this.id;
 		result += 37 * this.getClass().hashCode();
 		
 		return result;
@@ -76,11 +80,9 @@ public class OrderModel
 			OrderModel otherUser = (OrderModel) other;
 			boolean isSameClass = this.getClass().equals(otherUser.getClass());
 			
-			return (user.equals(otherUser.getUser())) && id.equals(otherUser.getId())
-					&& isSameClass;
+			return (user.equals(otherUser.getUser())) && id == otherUser.getId() && isSameClass;
 		}
 		
 		return false;
 	}
-	
 }

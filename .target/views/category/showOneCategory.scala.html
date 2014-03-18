@@ -5,15 +5,7 @@
 			<small>
 				Staff responsible: @category.getStaff_responsible()<br/>
 				Id: @category.getId()<br/>
-				Products in category: <br/>
-				@for( product <- products ){
-					@for(productCategory <- product.getCategories()){
-						@if(productCategory == category.getId()){
-							<a href="@routes.Product.showProductById(product.getId())">@product.getName()</a><br/>
-						}
-					}
-					
-				}
+
 			</small>
 	
 }

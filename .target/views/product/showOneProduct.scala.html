@@ -13,12 +13,7 @@
 			}
 			</br>
 			<small>
-				Categories: <br/>
-				@for(category <- product.getCategories()){
-					<a href="@routes.Category.showCategoryById(category)">@controllers.Category.getCategory(category).getName()</a><br/>
-				}
-				
-				</br>
+
 				Id: @product.getId()
 			</small>
 			</br>
