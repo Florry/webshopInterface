@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.avaje.ebean.Ebean;
 
 import play.mvc.*;
 import views.html.shoppingcart.*;

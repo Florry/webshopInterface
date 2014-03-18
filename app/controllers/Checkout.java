@@ -1,5 +1,7 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
+
 import play.mvc.Controller;
 import play.mvc.*;
 import views.html.checkout.*;

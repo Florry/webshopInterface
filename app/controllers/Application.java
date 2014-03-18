@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.avaje.ebean.Ebean;
+
 import model.CategoryModel;
 import model.OrderModel;
 import model.ProductModel;
@@ -71,38 +73,32 @@ public class Application extends Controller
 						"Small pear-shaped fruit, tasty. Comes in many colors including red, black, yellow and cyan.")
 				.cost(10).rrp(20).build());
 		
-		// private final List<Integer> categories;
-		//
-		// if (Ebean.find(UserModel.class).findSet().size() > 0)
-		// {
-		// Ebean.delete(Ebean.find(UserModel.class).findList());
-		// }
-		// if (Ebean.find(OrderModel.class).findSet().size() > 0)
-		// {
-		// Ebean.delete(Ebean.find(OrderModel.class).findList());
-		// }
-		// if (Ebean.find(CategoryModel.class).findSet().size() > 0)
-		// {
-		// Ebean.delete(Ebean.find(CategoryModel.class).findList());
-		// }
-		// if (Ebean.find(ProductModel.class).findSet().size() > 0)
-		// {
-		// Ebean.delete(Ebean.find(ProductModel.class).findList());
-		// }
+		if (Ebean.find(UserModel.class).findSet().size() > 0)
+		{
+			Ebean.delete(Ebean.find(UserModel.class).findList());
+		}
+		if (Ebean.find(OrderModel.class).findSet().size() > 0)
+		{
+			Ebean.delete(Ebean.find(OrderModel.class).findList());
+		}
+		if (Ebean.find(CategoryModel.class).findSet().size() > 0)
+		{
+			Ebean.delete(Ebean.find(CategoryModel.class).findList());
+		}
+		if (Ebean.find(ProductModel.class).findSet().size() > 0)
+		{
+			Ebean.delete(Ebean.find(ProductModel.class).findList());
+		}
 		
-		JPA.em().persist(users);
-		JPA.em().persist(orders);
-		JPA.em().persist(categories);
-		JPA.em().persist(products);
+		Ebean.save(users);
+		Ebean.save(orders);
+		Ebean.save(categories);
+		Ebean.save(products);
 		
-		List<UserModel> getUsers = JPA.em()
-				.createQuery("SELECT a FROM UserModel a", UserModel.class).getResultList();
-		List<ProductModel> getProducts = JPA.em()
-				.createQuery("SELECT a FROM ProductModel a", ProductModel.class).getResultList();
-		List<OrderModel> getOrders = JPA.em()
-				.createQuery("SELECT a FROM OrderModel a", OrderModel.class).getResultList();
-		List<CategoryModel> getCategories = JPA.em()
-				.createQuery("SELECT a FROM CategoryModel a", CategoryModel.class).getResultList();
+		List<UserModel> getUsers = Ebean.find(UserModel.class).findList();
+		List<OrderModel> getOrders = Ebean.find(OrderModel.class).findList();
+		List<CategoryModel> getCategories = Ebean.find(CategoryModel.class).findList();
+		List<ProductModel> getProducts = Ebean.find(ProductModel.class).findList();
 		
 		return ok("ok \n " + getUsers + " \n " + getProducts + " \n " + getOrders + " \n "
 				+ getCategories);
