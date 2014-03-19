@@ -1,0 +1,17 @@
+@(user: List[model.UserModel])(product: List[model.ProductModel])(order: model.OrderModel)(category: List[model.CategoryModel])
+@index("populated") {
+	OK! <br/>
+	<hr/>
+	Users added: <br/>
+	@user<br/>
+	<hr/>
+	Products added: <br/>
+	@product<br/>
+	<hr/>
+	Orders added: <br/>
+	@order.getContents.get(1)<br/>
+	<hr/>
+	Categories added: <br/>
+	@category<br/>
+	<hr/>
+}

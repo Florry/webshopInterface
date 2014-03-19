@@ -1,0 +1,10 @@
+@(users: List[model.UserModel])
+@index("all products") {
+			<h1>All webstore users:</h1>
+			<h4> 
+			@for( user <- users ){
+					<a href="@routes.User.showUser(user.getEmail())">@user.getEmail()</a>
+					<br />
+			}
+			</h4>
+}
