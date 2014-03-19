@@ -1,27 +1,43 @@
 package model;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import controllers.QuantityModel;
+
+@Entity
 public class OrderModel
 {
-	private final Map<Integer, Integer> products;
+	@Id
+	@GeneratedValue
+	private int id;
+	
+	@ManyToMany
+	private final List<ProductModel> products;
+	@ManyToMany
+	private final List<QuantityModel> quantities;
 	private final String user;
 	private final String date;
-	private final String id;
-	private final static String DEFAULT_ID = "-1";
 	
-	public OrderModel(String user, Map<Integer, Integer> products, String date, String id)
+	public OrderModel(String user, Map<ProductModel, QuantityModel> products, String date)
 	{
-		this.id = id;
 		this.date = date;
 		this.user = user;
-		this.products = new LinkedHashMap<>(products);
+		this.products = new LinkedList<ProductModel>();
+		this.products.addAll(products.keySet());
+		this.quantities = new LinkedList<QuantityModel>();
+		this.quantities.addAll(products.values());
 	}
 	
-	public OrderModel(String user, Map<Integer, Integer> products, String date)
+	public OrderModel()
 	{
-		this(user, products, date, DEFAULT_ID);
+		this("no@email.com", new LinkedHashMap<ProductModel, QuantityModel>(), "1970-01-01");
 	}
 	
 	public String getUser()
@@ -34,12 +50,29 @@ public class OrderModel
 		return date;
 	}
 	
-	public Map<Integer, Integer> getContents()
+	public List<ProductModel> getProducts()
 	{
 		return products;
 	}
 	
-	public String getId()
+	public List<QuantityModel> getQuantities()
+	{
+		return quantities;
+	}
+	
+	public LinkedHashMap<ProductModel, QuantityModel> getContents()
+	{
+		LinkedHashMap<ProductModel, QuantityModel> map = new LinkedHashMap<ProductModel, QuantityModel>();
+		LinkedList<ProductModel> product = new LinkedList<ProductModel>();
+		LinkedList<QuantityModel> quantity = new LinkedList<QuantityModel>();
+		for (int i = 0; i < product.size(); i++)
+		{
+			map.put(product.get(i), quantity.get(i));
+		}
+		return map;
+	}
+	
+	public int getId()
 	{
 		return id;
 	}
@@ -47,9 +80,8 @@ public class OrderModel
 	@Override
 	public String toString()
 	{
-		
-		return String.format("Order %s: %s - %s - %s", getId(), getUser(), getDate(), getContents()
-				.toString());
+		return "Order " + this.getId() + ": " + this.getUser() + " - " + getDate() + " - "
+				+ getContents();
 	}
 	
 	@Override
@@ -57,7 +89,7 @@ public class OrderModel
 	{
 		int result = 1;
 		result += 37 * this.user.hashCode();
-		result += 37 * this.id.hashCode();
+		result += 37 * this.id;
 		result += 37 * this.getClass().hashCode();
 		
 		return result;
@@ -76,11 +108,9 @@ public class OrderModel
 			OrderModel otherUser = (OrderModel) other;
 			boolean isSameClass = this.getClass().equals(otherUser.getClass());
 			
-			return (user.equals(otherUser.getUser())) && id.equals(otherUser.getId())
-					&& isSameClass;
+			return (user.equals(otherUser.getUser())) && id == otherUser.getId() && isSameClass;
 		}
 		
 		return false;
 	}
-	
 }

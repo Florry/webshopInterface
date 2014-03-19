@@ -10,26 +10,29 @@
 		<title>Webshop - @title</title>
 	</head>
 	<body style="padding: 20px;">
-					<h2>Welcome!</h2>
-					<div style="float: left;">
+					<h2><a href="@routes.Application.home">Welcome!</a></h2>
+					<div style="float: Right;">
 						<small>
-						<a href="@routes.Product.editProduct">Product edit</a></br>
+						<a href="@routes.Application.home">Home</a><br/>
+						<br/>
+						<a href="@routes.Application.populateDatabase">Populate Database</a><br/>
+						<a href="@routes.User.showAllUsers()">Show all users</a>
+						<br/><br/>
+						<!-- <a href="@routes.Product.editProduct">Product edit</a></br>-->
 						<a href="@routes.Product.showAllProducts">Product show all</a></br>
 						<a href="@routes.Product.showLowStock(10)">Product show products low on stock</a></br>
 						<br>
-						<a href="@routes.Category.editCategory">Category edit</a></br>
+						<!-- a href="@routes.Category.editCategory">Category edit</a></br>-->
 						<a href="@routes.Category.showAllCategories">Category show all</a></br>
-						<br>
 						<a href="@routes.ShoppingCart.showContents">Shoppingcart get contents</a></br>
-						<br>
-						<a href="@routes.Order.editContents">Order edit</a></br>
+						<!-- <a href="@routes.Order.editContents">Order edit</a></br>-->
 						<a href="@routes.Order.showAllOrders">Order show all</a></br>
 						<br>
 						<a href="@routes.Checkout.doCheckout">Checkout</a></br>
 						</small>
 					</div>
 					
-	     	   		<div style="width: 800px; margin-left: 20px; padding: 10px; background-color: lightGrey; float:left; text-align: center;">@content</div>
+	     	   		<div class="row container" style="width: 800px; margin-left: 20px; padding: 10px; background-color: lightGrey; float:left; text-align: center;">@content</div>
     	
 	</body>
 </html>

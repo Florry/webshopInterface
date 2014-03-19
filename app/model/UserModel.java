@@ -1,7 +1,12 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public final class UserModel
 {
+	@Id
 	private final String email;
 	private final String password;
 	private final String firstname;
@@ -13,70 +18,25 @@ public final class UserModel
 	private final String town;
 	private final String postcode;
 	
-	public static class Builder
+	public UserModel(String email, String password, String firstname, String lastname, String dob,
+			String telephone, String address1, String address2, String town, String postcode)
 	{
-		// required fields
-		private final String email;
-		private final String password;
-		private final String firstname;
-		private final String lastname;
-		private final String address1;
-		private final String town;
-		private final String postcode;
-		
-		// optional fields
-		private String dob;
-		private String telephone;
-		private String address2;
-		
-		public Builder(String email, String password, String firstname, String lastname,
-				String address1, String town, String postcode)
-		{
-			this.email = email;
-			this.password = password;
-			this.firstname = firstname;
-			this.lastname = lastname;
-			this.address1 = address1;
-			this.town = town;
-			this.postcode = postcode;
-		}
-		
-		public Builder dob(String dob)
-		{
-			this.dob = dob;
-			return this;
-		}
-		
-		public Builder telephone(String telephone)
-		{
-			this.telephone = telephone;
-			return this;
-		}
-		
-		public Builder address2(String address2)
-		{
-			this.address2 = address2;
-			return this;
-		}
-		
-		public UserModel build()
-		{
-			return new UserModel(this);
-		}
+		this.email = email;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.dob = dob;
+		this.telephone = telephone;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.town = town;
+		this.postcode = postcode;
 	}
 	
-	private UserModel(Builder builder)
+	public UserModel()
 	{
-		this.email = builder.email;
-		this.password = builder.password;
-		this.firstname = builder.firstname;
-		this.lastname = builder.lastname;
-		this.dob = builder.dob;
-		this.telephone = builder.telephone;
-		this.address1 = builder.address1;
-		this.address2 = builder.address2;
-		this.town = builder.town;
-		this.postcode = builder.postcode;
+		this("email", "password", "firstname", "lastname", "dob", "telephone", "address1",
+				"address2", "town", "postcode");
 	}
 	
 	public String getEmail()

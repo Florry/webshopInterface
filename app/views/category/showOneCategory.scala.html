@@ -1,19 +1,15 @@
-@(category: model.CategoryModel)(products: List[model.ProductModel])
+@(category: model.CategoryModel)
 @index(category.getName()) {
 
-			<h1> @category.getName() </h1>
+			<h1> @category.getName() <small> Id: @category.getId()</small></h1>
 			<small>
-				Staff responsible: @category.getStaff_responsible()<br/>
-				Id: @category.getId()<br/>
-				Products in category: <br/>
-				@for( product <- products ){
-					@for(productCategory <- product.getCategories()){
-						@if(productCategory == category.getId()){
-							<a href="@routes.Product.showProductById(product.getId())">@product.getName()</a><br/>
-						}
-					}
-					
+				Products in the @category.getName() category:
+				@for(product <- category.products){
+					<br/>
+					<a href="@routes.Product.showProductById(product.getId())">@product.getName()</a>
 				}
+				
+
 			</small>
 	
 }

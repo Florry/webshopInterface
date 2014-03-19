@@ -1,131 +1,45 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+@Entity
 public class ProductModel
 {
 	public static final int DEFAULT_PRODUCT_ID = -1;
 	
-	private final int id;
+	@Id
+	@GeneratedValue
+	private int id;
 	private final String name;
 	private final String description;
 	private final double cost;
 	private final double rrp;
-	private final List<Integer> categories;
+	
+	@ManyToMany
+	private final List<CategoryModel> categories;
 	private final int productType;
 	private final int stock;
 	
-	public static abstract class Builder<T extends Builder<T>>
+	public ProductModel()
 	{
-		// Required parameters
-		private final String name;
-		private final int productType;
-		private final int stock;
-		
-		protected abstract T self();
-		
-		// optional parameters
-		private int id;
-		private String description;
-		private double cost;
-		private double rrp;
-		private final List<Integer> categories;
-		
-		public Builder(String name, int productType, int stock)
-		{
-			this.name = name;
-			this.productType = productType;
-			this.stock = stock;
-			
-			id = DEFAULT_PRODUCT_ID;
-			description = "";
-			cost = 0;
-			rrp = 0;
-			categories = new ArrayList<Integer>();
-		}
-		
-		public T id(int id)
-		{
-			this.id = id;
-			return self();
-		}
-		
-		public T description(String description)
-		{
-			this.description = description;
-			return self();
-		}
-		
-		public T cost(double cost)
-		{
-			this.cost = cost;
-			return self();
-		}
-		
-		public T rrp(double rrp)
-		{
-			this.rrp = rrp;
-			return self();
-		}
-		
-		public T categories(List<Integer> categories)
-		{
-			if (categories != null)
-			{
-				this.categories.addAll(categories);
-			}
-			return self();
-		}
-		
-		public ProductModel build()
-		{
-			return new ProductModel(this);
-		}
-		
+		this("Unkown name", "no description", 0, 0, null, 0, 0);
 	}
 	
-	private static class Builder2 extends Builder<Builder2>
+	public ProductModel(String name, String description, double cost, double rrp,
+			List<CategoryModel> categories, int productType, int stock)
 	{
-		public Builder2(String name, int productType, int stock)
-		{
-			super(name, productType, stock);
-		}
-		
-		@Override
-		protected Builder2 self()
-		{
-			return this;
-		}
-	}
-	
-	protected ProductModel(Builder<?> builder)
-	{
-		this.id = builder.id;
-		this.name = builder.name;
-		this.stock = builder.stock;
-		this.description = builder.description;
-		this.cost = builder.cost;
-		this.rrp = builder.rrp;
-		this.categories = builder.categories;
-		this.productType = builder.productType;
-	}
-	
-	public ProductModel(int id, ProductModel other)
-	{
-		this.id = id;
-		this.name = other.name;
-		this.stock = other.stock;
-		this.description = other.description;
-		this.cost = other.cost;
-		this.rrp = other.rrp;
-		this.categories = other.categories;
-		this.productType = other.productType;
-	}
-	
-	public static Builder<?> builder(String name, int productType, int stock)
-	{
-		return new Builder2(name, productType, stock);
+		this.name = name;
+		this.description = description;
+		this.cost = cost;
+		this.rrp = rrp;
+		this.categories = categories;
+		this.productType = productType;
+		this.stock = stock;
 	}
 	
 	public int getId()
@@ -153,7 +67,7 @@ public class ProductModel
 		return this.rrp;
 	}
 	
-	public List<Integer> getCategories()
+	public List<CategoryModel> getCategories()
 	{
 		return categories;
 	}
@@ -218,24 +132,10 @@ public class ProductModel
 	@Override
 	public String toString()
 	{
-		String categoriesTxt = "[";
-		boolean first = true;
-		for (int cat : this.categories)
-		{
-			if (!first)
-			{
-				categoriesTxt += ", ";
-			} else
-			{
-				first = false;
-			}
-			categoriesTxt += cat;
-		}
-		categoriesTxt += "]";
 		
-		return String
-				.format("Id: %s, Stock: %s, Name: %s, Description: %s, Cost: %s, RRP: %s, ProductType: %s, Categories: %s",
-						id, stock, name, description, cost, rrp, productType, categoriesTxt);
+		return "ID: " + this.id + ", Stock: " + this.stock + ", Name: " + this.name
+				+ ", Description: " + this.description + ", Cost: " + this.cost + ", RRP: "
+				+ this.rrp + ", Product Type; " + this.productType
+				+ ", categories: categories goes here";
 	}
-	
 }
