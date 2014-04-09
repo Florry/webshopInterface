@@ -47,7 +47,7 @@ public class User extends Controller
 		{
 			quantity = 1;
 		}
-		if (quantity < 0)
+		if (quantity <= 0)
 		{
 			quantity = 1;
 		}
@@ -92,7 +92,7 @@ public class User extends Controller
 		{
 			quantity = 1;
 		}
-		if (quantity < 0)
+		if (quantity <= 0)
 		{
 			quantity = 1;
 		}

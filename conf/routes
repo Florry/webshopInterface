@@ -1,6 +1,5 @@
 # Home page
 GET 	/									controllers.Application.home()
-GET		/notloggedin						controllers.Login.notLoggedIn()
 GET		/edit								controllers.Application.edit()
 
 #Products

@@ -29,6 +29,7 @@ public class AuthenticatorLoggedIn extends play.mvc.Security.Authenticator
 	@Override
 	public Result onUnauthorized(Context arg0)
 	{
-		return redirect(routes.Login.notLoggedIn());
+		controllers.Login.flash().put("not-logged-in", "yes");
+		return redirect(routes.Application.home());
 	}
 }

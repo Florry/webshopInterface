@@ -70,12 +70,6 @@ public class Login extends Controller
 		return redirect(headers.get("Referer")[0]);
 	}
 	
-	public static Result notLoggedIn()
-	{
-		flash().put("not-logged-in", "yes");
-		return redirect(routes.Application.home());
-	}
-	
 	@Transactional
 	public static String decodeEmail(String encoded)
 	{
