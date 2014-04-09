@@ -2,10 +2,10 @@
 	@import java.lang.Integer; var rights = 0; 
 	@import java.lang.String; var userEmail = "";
 	@if(session.get("username") != null){
-		@{userEmail = controllers.Login.decodeEmail(session.get("username"))};
+		@{userEmail = controllers.Login.decodeEmail(session.get("username"))}
 	}
 	@if(session().get("rights") != null){
-		@{rights = Integer.parseInt(controllers.Login.decodeEmail(session().get("rights")))};
+		@{rights = Integer.parseInt(controllers.Login.decodeEmail(session().get("rights")))}
 	}
 	<!DOCTYPE html>
 	<html lang="en">
