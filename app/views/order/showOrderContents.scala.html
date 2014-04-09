@@ -1,5 +1,5 @@
 @(order: model.OrderModel)(user: model.UserModel)
-	@index("order ") {
+	@index("Order") {
 		@if(order != null && (controllers.Login.decodeEmail(session().get("username")) == user.getEmail() || Integer.parseInt(controllers.Login.decodeEmail(session().get("rights"))) > 0)){
 			@if(session().get("rights") != null && Integer.parseInt(controllers.Login.decodeEmail(session().get("rights"))) > 0){
 				<h4>

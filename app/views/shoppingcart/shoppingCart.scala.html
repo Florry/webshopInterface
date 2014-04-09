@@ -1,6 +1,6 @@
 @* shoppingCart Template File *@
 @(user: model.UserModel, products: List[model.ProductModel])
-	@index("Showing shoppingcart") {
+	@index("Shoppingcart") {
 		@if(user != null){
 			@user.getFirstname @user.getLastname<br/>
 			<h4>Shopping cart</h4>
