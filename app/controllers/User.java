@@ -285,24 +285,32 @@ public class User extends Controller
 		final String town = form.get("town")[0];
 		final String postcode = form.get("postcode")[0];
 		
-		if (email != "")
+		UserModel knownUser = controllers.User.getUser(email);
+		if (knownUser == null)
 		{
-			final UserModel newUser = new UserModel(email, password, firstname, lastname, dob,
-					telephone, address1, address2, town, postcode);
-			newUser.setRights(0);
-			
-			JPA.em().persist(newUser);
-			
-			final String encoded = controllers.Login.encodeEmail(newUser.getEmail());
-			final String encodedRights = controllers.Login.encodeEmail("0");
-			
-			session().put("username", encoded);
-			session().put("rights", encodedRights);
-			
-			return redirect(routes.User.showProfile());
+			if (email != "")
+			{
+				final UserModel newUser = new UserModel(email, password, firstname, lastname, dob,
+						telephone, address1, address2, town, postcode);
+				newUser.setRights(0);
+				
+				JPA.em().persist(newUser);
+				
+				final String encoded = controllers.Login.encodeEmail(newUser.getEmail());
+				final String encodedRights = controllers.Login.encodeEmail("0");
+				
+				session().put("username", encoded);
+				session().put("rights", encodedRights);
+				
+				return redirect(routes.User.showProfile());
+			} else
+			{
+				flash().put("email-null", "yes");
+				return redirect(routes.User.registerUserForm());
+			}
 		} else
 		{
-			flash().put("email-null", "yes");
+			flash().put("email-in-use", "yes");
 			return redirect(routes.User.registerUserForm());
 		}
 	}

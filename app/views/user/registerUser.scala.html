@@ -5,6 +5,9 @@
 			@if(flash.containsKey("email-null")){
 				<div class="alert alert-warning"><small>Email required</small></div>
 			}
+			@if(flash.containsKey("email-in-use")){
+				<div class="alert alert-warning"><small>Email is already in use!</small></div>
+			}
 			<div class="formblock" style="width:50%; text-align: left;">
 				<br/>
 				<form role="form" action ="@routes.User.registerUser()" method="POST">
