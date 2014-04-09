@@ -2,6 +2,9 @@
 	@index("Add Category") {
 		<center>
 			<h3>Register User</h3>
+			@if(flash.containsKey("email-null")){
+				<div class="alert alert-warning"><small>Email required</small></div>
+			}
 			<div class="formblock" style="width:50%; text-align: left;">
 				<br/>
 				<form role="form" action ="@routes.User.registerUser()" method="POST">

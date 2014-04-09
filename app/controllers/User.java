@@ -166,7 +166,7 @@ public class User extends Controller
 		} else
 		{
 			flash().put("email-null", "yes");
-			return redirect(routes.User.addUser());
+			return redirect(routes.User.addUserForm());
 		}
 	}
 	
@@ -285,19 +285,26 @@ public class User extends Controller
 		final String town = form.get("town")[0];
 		final String postcode = form.get("postcode")[0];
 		
-		final UserModel newUser = new UserModel(email, password, firstname, lastname, dob,
-				telephone, address1, address2, town, postcode);
-		newUser.setRights(0);
-		
-		JPA.em().persist(newUser);
-		
-		final String encoded = controllers.Login.encodeEmail(newUser.getEmail());
-		final String encodedRights = controllers.Login.encodeEmail("0");
-		
-		session().put("username", encoded);
-		session().put("rights", encodedRights);
-		
-		return redirect(routes.User.showProfile());
+		if (email != "")
+		{
+			final UserModel newUser = new UserModel(email, password, firstname, lastname, dob,
+					telephone, address1, address2, town, postcode);
+			newUser.setRights(0);
+			
+			JPA.em().persist(newUser);
+			
+			final String encoded = controllers.Login.encodeEmail(newUser.getEmail());
+			final String encodedRights = controllers.Login.encodeEmail("0");
+			
+			session().put("username", encoded);
+			session().put("rights", encodedRights);
+			
+			return redirect(routes.User.showProfile());
+		} else
+		{
+			flash().put("email-null", "yes");
+			return redirect(routes.User.registerUserForm());
+		}
 	}
 	
 	@Transactional
