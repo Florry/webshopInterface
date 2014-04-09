@@ -1,34 +1,63 @@
 # Home page
 GET 	/									controllers.Application.home()
-
-GET		/populate							controllers.Application.populateDatabase()
+GET		/notloggedin						controllers.Login.notLoggedIn()
+GET		/edit								controllers.Application.edit()
 
 #Products
-GET 	/products/showall					controllers.Product.showAllProducts()
-GET 	/products/edit						controllers.Product.editProduct()
-GET 	/products/lowstock/:param			controllers.Product.showLowStock(param: Int)
+GET   	/products/add                       controllers.Product.addProductForm()
+GET   	/products/delete                    controllers.Product.deleteProductform()
+GET		/products/edit/:id					controllers.Product.editProductForm(id: Int)
+GET 	/products/							controllers.Product.showAllProducts()
+GET 	/products/lowstock/:stock			controllers.Product.showLowStock(stock: Int)
 GET 	/products/:id						controllers.Product.showProductById(id: Int)
+POST  	/products	                      	controllers.Product.addProduct()
+POST	/products/delete					controllers.Product.deleteProduct()
+POST	/products/edit						controllers.Product.editProduct()
 
 #Categories
-GET 	/categories/showall					controllers.Category.showAllCategories()
-GET		/categories/edit					controllers.Category.editCategory()
+GET		/categories/edit					controllers.Category.addCategoryForm()
+GET 	/categories							controllers.Category.showAllCategories()
 GET 	/categories/:id						controllers.Category.showCategoryById(id: Int)
+POST	/categories/delete					controllers.Category.deleteCategory()
+POST	/categories							controllers.Category.addCategory()
 
 #Shoppingcart
-GET 	/shoppingcart/contents				controllers.ShoppingCart.showContents()
-GET 	/shoppingcart/edit					controllers.ShoppingCart.editContents()
+POST	/shoppingcart/:id					controllers.User.addProductToCartByEmail(id: String)
+POST	/shoppingcart						controllers.User.addProductToCart()
+POST	/shoppingcart/remove/:id			controllers.User.removeProductFromCart(id: String)
+POST	/shoppingcart/quantity/remove/:id	controllers.User.removeQuantity(id: String)
+POST	/shoppingcart/quantity/add/:id		controllers.User.addQuantity(id: String)
+GET 	/shoppingcart						controllers.User.showShoppingCart()
+GET 	/shoppingcart/:id					controllers.User.showShoppingCartByEmail(id: String)
 
 #Order
-GET		/order/contents/:id					controllers.Order.showContents(id: Int)
-GET		/order/showall						controllers.Order.showAllOrders()
-GET		/order/edit							controllers.Order.editContents()
+GET		/order/:id							controllers.Order.showContents(id: Int)
+GET		/orders/							controllers.Order.showAllOrders()
+POST	/order/place/:id					controllers.Order.placeOrder(id: String)
 
 #User
-GET   	/users                        		 controllers.User.showAllUsers()
-GET		/user/:email 						controllers.User.showUser(email)
+GET		/users/add							controllers.User.addUserForm()
+GET		/users/register						controllers.User.registerUserForm()
+GET		/users/delete						controllers.User.deleteUserForm()
+GET		/users/edit/:email					controllers.User.editUserForm(email: String)
+GET   	/users                        		controllers.User.showAllUsers()
+GET		/users/:email 						controllers.User.showUser(email: String)
+POST	/users/delete						controllers.User.deleteUser()
+POST	/users								controllers.User.addUser()
+POST	/users/register						controllers.User.registerUser()
+POST	/users/edit							controllers.User.editUser()
 
-#Checkout
-GET		/checkout							controllers.Checkout.doCheckout()
+#Profile
+GET		/profile							controllers.User.showProfile()
+GET		/profile/update						controllers.User.updateProfileForm()
+POST	/profile/edit						controllers.User.updateProfile()
+
+#Login
+POST	/login								controllers.Login.loginUser()
+GET		/logout								controllers.Login.logoutUser()
+GET		/hardlogout							controllers.Login.hardLogoutUser()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file             			controllers.Assets.at(path="/public", file)
+
+

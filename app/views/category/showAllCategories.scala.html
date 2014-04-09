@@ -1,9 +1,12 @@
 @(categories: List[model.CategoryModel])
-@index("all categories") {
-			<h1>All categories in the store:</h1>
-			<h4> 
+	@index("all categories") {
+		<h1>Products by category</h1>
+		<h4> 
+		<hr/>
 			@for( category <- categories ){
-					<a href="@routes.Category.showCategoryById(category.getId())">@category.getName()</a><br/>
+				<img src="http://placehold.it/60x60&text=Category" class="img-circle"/>&nbsp;&nbsp;
+				<a href="@routes.Category.showCategoryById(category.getId())">@category.getName()</a>
+				<hr/>
 			}
-			</h4>
-}
+		</h4>
+	}

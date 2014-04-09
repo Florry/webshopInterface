@@ -1,23 +1,43 @@
 @(user: model.UserModel)
-@index(user.getEmail()) {
-	<h1>@user.getFirstname() @user.getLastname()</h1>
-	<h4>@user.getEmail()</h4>
-	<hr>
-	<small>
-	<b>Date of birth</b><br/> 
-	@if(user.getDob() == null){
-		n/a
+	@index("Show user") {
+		<span style="text-align: left;">
+			@if(user != null){
+			<h1>@user.getFirstname() @user.getLastname()</h1>
+			<h4>@user.getEmail()</h4>
+			<hr>
+			<small>
+			<b>Date of birth</b><br/> 
+			@if(user.getDob() == null){
+				n/a
+			}else{
+				@user.getDob()
+			} <br/>
+			<b>Telephone</b><br/> 
+			@if(user.getTelephone() == null){
+				n/a
+			}else{
+				@user.getTelephone()
+			}
+			<br/>
+			<b>Address</b><br/> @user.getAddress1() @user.getAddress2() <br/> @user.getPostcode() @user.getTown()<br/><br/>
+			
+			@if(session().get("rights") != null && Integer.parseInt(controllers.Login.decodeEmail(session().get("rights"))) > 0){
+				<a href="@routes.User.showShoppingCartByEmail(user.getEmail())">ShoppingCart</a>
+			}else{
+				<a href="@routes.User.showShoppingCart()">ShoppingCart</a>
+			}		
+			<h3>Orders:</h3>
+				@for((order, count) <- user.getOrders().zipWithIndex){
+					<a href="@routes.Order.showContents(order.getId())">#@order.getId() - @order.getDate()</a><br/>		
+				}
+			</small><br/><br/>
+			@if(session().get("rights") != null && Integer.parseInt(controllers.Login.decodeEmail(session().get("rights"))) > 0){
+				<span style="float:left;"><a href="@routes.User.editUserForm(user.getEmail())">Update profile</a></span>
+			}else{
+				<span style="float:left;"><a href="@routes.User.updateProfileForm()">Update profile</a></span>
+			}
 		}else{
-		@user.getDob()
-		} <br/>
-	<b>Telephone</b><br/> 
-	@if(user.getTelephone() == null){
-		n/a
-	}else{
-		@user.getTelephone()
+		<small>User not found!</small>
+		}
+	</span>
 	}
-	<br/>
-	<b>Address</b><br/> @user.getAddress1() @user.getAddress2() <br/> @user.getPostcode() @user.getTown()<br/>
-
-	</small>
-}

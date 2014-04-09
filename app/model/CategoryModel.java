@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,16 +15,16 @@ public final class CategoryModel
 	@Id
 	@GeneratedValue
 	private int id;
-	private String name;
-	private int staff_responsible;
-	
-	@ManyToMany(mappedBy = "categories")
+	private final String name;
+	@ManyToMany(mappedBy = "categories", cascade =
+	{ CascadeType.ALL })
 	public List<ProductModel> products;
 	
-	public CategoryModel(String name, int staff_responsible)
+	private final int staff_responsible;
+	
+	public CategoryModel()
 	{
-		this.name = name;
-		this.staff_responsible = staff_responsible;
+		this("Unkown category", -1);
 	}
 	
 	public CategoryModel(int id, CategoryModel other)
@@ -31,49 +32,58 @@ public final class CategoryModel
 		this(other.name, other.staff_responsible);
 	}
 	
-	public CategoryModel()
+	public CategoryModel(String name, int staff_responsible)
 	{
-		this("Unkown category", -1);
-	}
-	
-	public int getId()
-	{
-		return id;
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public int getStaff_responsible()
-	{
-		return staff_responsible;
-	}
-	
-	@Override
-	public int hashCode()
-	{
-		return 31 * id;
+		this.name = name;
+		this.staff_responsible = staff_responsible;
 	}
 	
 	@Override
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
+		{
 			return true;
+		}
 		if (obj instanceof CategoryModel)
 		{
-			CategoryModel other = (CategoryModel) obj;
-			return id == other.id;
+			final CategoryModel other = (CategoryModel) obj;
+			return this.id == other.id;
 		}
 		return false;
 	}
 	
+	public int getId()
+	{
+		return this.id;
+	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	public int getStaff_responsible()
+	{
+		return this.staff_responsible;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return 31 * this.id;
+	}
+	
+	public void setProducts(List<ProductModel> products)
+	{
+		this.products = products;
+	}
+	
+	@Override
 	public String toString()
 	{
-		return String.format("Id: %s, Name: %s, Straff_responsible: %s", id, name,
-				staff_responsible);
+		return String.format("Id: %s, Name: %s, Straff_responsible: %s", this.id, this.name,
+				this.staff_responsible);
 	}
 	
 }

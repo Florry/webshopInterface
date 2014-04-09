@@ -1,15 +1,16 @@
 @(category: model.CategoryModel)
-@index(category.getName()) {
-
-			<h1> @category.getName() <small> Id: @category.getId()</small></h1>
-			<small>
-				Products in the @category.getName() category:
-				@for(product <- category.products){
-					<br/>
-					<a href="@routes.Product.showProductById(product.getId())">@product.getName()</a>
-				}
-				
-
-			</small>
-	
-}
+	@index("category") {
+		@if(category != null){
+		<h4> @category.getName() </h4>
+		<hr/>
+		<img src="http://placehold.it/140x140&text=@category.getName()" class="img-circle" style="float: right;"/>			
+			@for(product <- category.products){
+				<a href="@routes.Product.showProductById(product.getId())"><img src="@product.getImgUrl()" class="img-circle productImgSmall"/>&nbsp;&nbsp;
+					@product.getName()
+				</a>
+				<hr/>
+			}
+		}else{
+			category not found!
+		}
+	}

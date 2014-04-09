@@ -11,19 +11,21 @@ import javax.persistence.ManyToMany;
 public class ProductModel
 {
 	public static final int DEFAULT_PRODUCT_ID = -1;
-	
+	@ManyToMany
+	public List<CategoryModel> categories;
+	private double cost;
+	private String description;
 	@Id
 	@GeneratedValue
 	private int id;
-	private final String name;
-	private final String description;
-	private final double cost;
-	private final double rrp;
+	private String imgUrl;
+	private boolean inStore;
+	private String name;
 	
-	@ManyToMany
-	private final List<CategoryModel> categories;
 	private final int productType;
-	private final int stock;
+	
+	private double rrp;
+	private int stock;
 	
 	public ProductModel()
 	{
@@ -40,80 +42,19 @@ public class ProductModel
 		this.categories = categories;
 		this.productType = productType;
 		this.stock = stock;
-	}
-	
-	public int getId()
-	{
-		return id;
-	}
-	
-	public String getName()
-	{
-		return this.name;
-	}
-	
-	public String getDescription()
-	{
-		return this.description;
-	}
-	
-	public double getCost()
-	{
-		return this.cost;
-	}
-	
-	public double getRrp()
-	{
-		return this.rrp;
-	}
-	
-	public List<CategoryModel> getCategories()
-	{
-		return categories;
-	}
-	
-	public int getProductType()
-	{
-		return productType;
-	}
-	
-	public int getStock()
-	{
-		return stock;
-	}
-	
-	@Override
-	public int hashCode()
-	{
-		if (id != DEFAULT_PRODUCT_ID)
-		{
-			return 37 * id;
-		}
-		
-		int hash = 37;
-		hash *= name.hashCode();
-		hash *= description.hashCode();
-		hash += cost;
-		hash += rrp;
-		hash *= categories.hashCode();
-		hash *= productType;
-		
-		return hash;
+		this.setInStore(true);
 	}
 	
 	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj == this)
+		{
 			return true;
+		}
 		if (obj instanceof ProductModel)
 		{
-			ProductModel other = (ProductModel) obj;
-			
-			if ((other.id != DEFAULT_PRODUCT_ID) || (this.id != DEFAULT_PRODUCT_ID))
-			{
-				return (other.id == this.id);
-			}
+			final ProductModel other = (ProductModel) obj;
 			
 			boolean isEqual = true;
 			isEqual = isEqual && other.name.equals(this.name);
@@ -121,12 +62,120 @@ public class ProductModel
 			isEqual = isEqual && other.cost == this.cost;
 			isEqual = isEqual && other.rrp == this.rrp;
 			isEqual = isEqual && other.categories.equals(this.categories);
-			isEqual = isEqual && other.productType == this.productType;
 			
 			return isEqual;
 			
 		}
 		return false;
+	}
+	
+	public List<CategoryModel> getCategories()
+	{
+		return this.categories;
+	}
+	
+	public double getCost()
+	{
+		return this.cost;
+	}
+	
+	public String getDescription()
+	{
+		return this.description;
+	}
+	
+	public int getId()
+	{
+		return this.id;
+	}
+	
+	public String getImgUrl()
+	{
+		return this.imgUrl;
+	}
+	
+	public String getName()
+	{
+		return this.name;
+	}
+	
+	public int getProductType()
+	{
+		return this.productType;
+	}
+	
+	public double getRrp()
+	{
+		return this.rrp;
+	}
+	
+	public int getStock()
+	{
+		return this.stock;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		if (this.id != DEFAULT_PRODUCT_ID)
+		{
+			return 37 * this.id;
+		}
+		
+		int hash = 37;
+		hash *= this.name.hashCode();
+		hash *= this.description.hashCode();
+		hash += this.cost;
+		hash += this.rrp;
+		hash *= this.categories.hashCode();
+		hash *= this.productType;
+		
+		return hash;
+	}
+	
+	public boolean isInStore()
+	{
+		return this.inStore;
+	}
+	
+	public void setCategories(List<CategoryModel> categories)
+	{
+		this.categories = categories;
+	}
+	
+	public void setCost(double cost)
+	{
+		this.cost = cost;
+	}
+	
+	public void setDescription(String description)
+	{
+		this.description = description;
+	}
+	
+	public void setImgUrl(String imgUrl)
+	{
+		this.imgUrl = imgUrl;
+	}
+	
+	public void setInStore(boolean inStore)
+	{
+		this.inStore = inStore;
+	}
+	
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	public void setRrp(double rrp)
+	{
+		this.rrp = rrp;
+	}
+	
+	public void setStock(int stock)
+	{
+		this.stock = stock;
 	}
 	
 	@Override
@@ -135,7 +184,6 @@ public class ProductModel
 		
 		return "ID: " + this.id + ", Stock: " + this.stock + ", Name: " + this.name
 				+ ", Description: " + this.description + ", Cost: " + this.cost + ", RRP: "
-				+ this.rrp + ", Product Type; " + this.productType
-				+ ", categories: categories goes here";
+				+ this.rrp + ", Product Type; " + this.productType + ", " + this.categories;
 	}
 }

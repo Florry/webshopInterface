@@ -1,87 +1,121 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import controllers.QuantityModel;
+import javax.persistence.OneToMany;
 
 @Entity
 public class OrderModel
 {
+	private final String date;
+	
 	@Id
 	@GeneratedValue
 	private int id;
+	@OneToMany(cascade =
+	{ CascadeType.ALL })
+	public List<ProductInCartModel> products;
 	
-	@ManyToMany
-	private final List<ProductModel> products;
-	@ManyToMany
-	private final List<QuantityModel> quantities;
+	private int totalPrice;
+	
 	private final String user;
-	private final String date;
+	
+	public OrderModel()
+	{
+		this("no@email.com", new LinkedHashMap<ProductModel, QuantityModel>(), "1970-01-01");
+		for (final ProductInCartModel product : this.products)
+		{
+			this.totalPrice += product.getQuantity().getQuantity() * product.getProduct().getCost();
+		}
+	}
+	
+	public OrderModel(String user, List<ProductInCartModel> products, String date)
+	{
+		this.date = date;
+		this.user = user;
+		this.products = new ArrayList<ProductInCartModel>(products);
+		for (final ProductInCartModel product : products)
+		{
+			this.totalPrice += product.getQuantity().getQuantity() * product.getProduct().getCost();
+		}
+	}
 	
 	public OrderModel(String user, Map<ProductModel, QuantityModel> products, String date)
 	{
 		this.date = date;
 		this.user = user;
-		this.products = new LinkedList<ProductModel>();
-		this.products.addAll(products.keySet());
-		this.quantities = new LinkedList<QuantityModel>();
-		this.quantities.addAll(products.values());
-	}
-	
-	public OrderModel()
-	{
-		this("no@email.com", new LinkedHashMap<ProductModel, QuantityModel>(), "1970-01-01");
-	}
-	
-	public String getUser()
-	{
-		return user;
-	}
-	
-	public String getDate()
-	{
-		return date;
-	}
-	
-	public List<ProductModel> getProducts()
-	{
-		return products;
-	}
-	
-	public List<QuantityModel> getQuantities()
-	{
-		return quantities;
-	}
-	
-	public LinkedHashMap<ProductModel, QuantityModel> getContents()
-	{
-		LinkedHashMap<ProductModel, QuantityModel> map = new LinkedHashMap<ProductModel, QuantityModel>();
-		LinkedList<ProductModel> product = new LinkedList<ProductModel>();
-		LinkedList<QuantityModel> quantity = new LinkedList<QuantityModel>();
-		for (int i = 0; i < product.size(); i++)
+		this.products = new ArrayList<ProductInCartModel>();
+		
+		for (final ProductModel product : products.keySet())
 		{
-			map.put(product.get(i), quantity.get(i));
+			final ProductInCartModel productInOrder = new ProductInCartModel();
+			productInOrder.setProduct(product);
+			productInOrder.setQuantity(products.get(product));
+			this.products.add(productInOrder);
+			this.totalPrice += products.get(product).getQuantity() * product.getCost();
+		}
+	}
+	
+	@Override
+	public boolean equals(Object other)
+	{
+		if (other == this)
+		{
+			return true;
+		}
+		
+		if (other instanceof OrderModel)
+		{
+			final OrderModel otherUser = (OrderModel) other;
+			final boolean isSameClass = this.getClass().equals(otherUser.getClass());
+			
+			return (this.user.equals(otherUser.getUser())) && this.id == otherUser.getId()
+					&& isSameClass;
+		}
+		
+		return false;
+	}
+	
+	public List<ProductInCartModel> getContents()
+	{
+		return this.products;
+	}
+	
+	public LinkedHashMap<ProductModel, Integer> getContentsMap()
+	{
+		final LinkedHashMap<ProductModel, Integer> map = new LinkedHashMap<ProductModel, Integer>();
+		for (final ProductInCartModel product : this.products)
+		{
+			map.put(product.getProduct(), product.getQuantity().getQuantity());
 		}
 		return map;
 	}
 	
-	public int getId()
+	public String getDate()
 	{
-		return id;
+		return this.date;
 	}
 	
-	@Override
-	public String toString()
+	public int getId()
 	{
-		return "Order " + this.getId() + ": " + this.getUser() + " - " + getDate() + " - "
-				+ getContents();
+		return this.id;
+	}
+	
+	public int getTotalPrice()
+	{
+		return this.totalPrice;
+	}
+	
+	public String getUser()
+	{
+		return this.user;
 	}
 	
 	@Override
@@ -95,22 +129,15 @@ public class OrderModel
 		return result;
 	}
 	
-	@Override
-	public boolean equals(Object other)
+	public void setContents(List<ProductInCartModel> products)
 	{
-		if (other == this)
-		{
-			return true;
-		}
-		
-		if (other instanceof OrderModel)
-		{
-			OrderModel otherUser = (OrderModel) other;
-			boolean isSameClass = this.getClass().equals(otherUser.getClass());
-			
-			return (user.equals(otherUser.getUser())) && id == otherUser.getId() && isSameClass;
-		}
-		
-		return false;
+		this.products = products;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "Order " + this.getId() + ": " + this.getUser() + " - " + this.getDate() + " - "
+				+ this.getContents();
 	}
 }
