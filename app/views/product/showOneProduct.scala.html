@@ -1,8 +1,13 @@
 @(product: model.ProductModel)
-@index("Product") {
+@import java.lang.String; var name = "";
+	@if(product != null){
+		@{name = product.getName()}
+	}else{
+		@{name = "product not found!"}
+	}
+@index("Product - " + name) {
 	@if(product != null){
 		<h1> @product.getName() 
-		
 		@if(session().get("rights") != null && Integer.parseInt(controllers.Login.decodeEmail(session().get("rights"))) > 0){
 			<small>:@product.getId()</small>
 		}

@@ -1,5 +1,11 @@
 @(user: model.UserModel)
-	@index("Show user") {
+@import java.lang.String; var name = "";
+	@if(user != null){
+		@{name = user.getEmail()}
+	}else{
+		@{name = "Usr not found!"}
+	}
+	@index("" + name) {
 		<span style="text-align: left;">
 			@if(user != null){
 			<h1>@user.getFirstname() @user.getLastname()</h1>

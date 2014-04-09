@@ -1,5 +1,11 @@
 @(product: model.ProductModel, categories: List[model.CategoryModel])
-	@index("Edit product") {
+@import java.lang.String; var name = "";
+	@if(product != null){
+		@{name = product.getName()}
+	}else{
+		@{name = "Usr not found!"}
+	}
+	@index("Edit product " + name) {
 		<center>
 			<h3>Edit product @product.getId()</h3>
 							<img src="@product.getImgUrl()" class="img-circle" style="float: right; width: 10%; height: 10%;"/>

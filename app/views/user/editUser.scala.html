@@ -1,5 +1,11 @@
 @(user: model.UserModel)
-	@index("Edit user") {
+@import java.lang.String; var name = "";
+	@if(user != null){
+		@{name = user.getEmail()}
+	}else{
+		@{name = "Usr not found!"}
+	}
+	@index("Edit profile " + name) {
 		<center>
 			@if(flash.containsKey("user-updated")){
 				<div class="alert alert-warning"><small>User @user.getEmail() was updated!</small></div>

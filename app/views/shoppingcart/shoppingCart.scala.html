@@ -1,6 +1,12 @@
 @* shoppingCart Template File *@
 @(user: model.UserModel, products: List[model.ProductModel])
-	@index("Shoppingcart") {
+@import java.lang.String; var name = "";
+	@if(user != null){
+		@{name = user.getEmail()}
+	}else{
+		@{name = "Usr not found!"}
+	}
+	@index("Shoppingcart " + name) {
 		@if(user != null){
 			@user.getFirstname @user.getLastname<br/>
 			<h4>Shopping cart</h4>
